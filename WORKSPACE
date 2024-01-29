@@ -7,10 +7,10 @@ http_archive(
     name = "postgresql",
     build_file = "//ml_metadata:postgresql.BUILD",
     workspace_file_content = "//ml_metadata:postgresql.WORKSPACE",
-    sha256 = "9868c1149a04bae1131533c5cbd1c46f9c077f834f6147abaef8791a7c91b1a1",
-    strip_prefix = "postgresql-12.1",
+    sha256 = "1cb8e3a59861be5175878159fc3a41240c379e9aabaabba8288e6cfd6980fff0",
+    strip_prefix = "postgresql-12.17",
     urls = [
-        "https://ftp.postgresql.org/pub/source/v12.1/postgresql-12.1.tar.gz",
+        "https://ftp.postgresql.org/pub/source/v12.17/postgresql-12.17.tar.gz",
     ],
 )
 
