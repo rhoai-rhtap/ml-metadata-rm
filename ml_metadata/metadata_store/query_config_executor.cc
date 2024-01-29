@@ -283,11 +283,11 @@ absl::Status QueryConfigExecutor::DowngradeMetadataSource(
 }
 
 std::string QueryConfigExecutor::Bind(const char* value) {
-  return absl::StrCat("'", metadata_source_->EscapeString(value), "'");
+  return metadata_source_->EscapeString(value);
 }
 
 std::string QueryConfigExecutor::Bind(absl::string_view value) {
-  return absl::StrCat("'", metadata_source_->EscapeString(value), "'");
+  return metadata_source_->EscapeString(value);
 }
 
 std::string QueryConfigExecutor::Bind(int value) {

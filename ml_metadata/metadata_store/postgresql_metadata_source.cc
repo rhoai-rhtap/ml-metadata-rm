@@ -315,12 +315,8 @@ std::string PostgreSQLMetadataSource::EscapeString(
 
   char* escaped_str = PQescapeLiteral(conn_, value.data(), value.size());
   std::string result{escaped_str};
-  // PQescapeLiteral will wrap the escaped string in '', which is redundant to
-  // the existing MLMD syntax. Therefore stripping the outer '' from the escaped
-  // string.
-  std::string substring = result.substr(1, std::strlen(result.data()) - 2);
   PQfreemem(escaped_str);
-  return substring;
+  return result;
 }
 
 std::string PostgreSQLMetadataSource::EncodeBytes(

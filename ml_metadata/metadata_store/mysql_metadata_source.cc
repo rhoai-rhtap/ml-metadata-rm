@@ -402,7 +402,7 @@ std::string MySqlMetadataSource::EscapeString(absl::string_view value) const {
   CHECK(mysql_real_escape_string(db_, buffer, value.data(), value.length()) !=
         -1UL)
       << "NO_BACKSLASH_ESCAPES SQL mode should not be enabled.";
-  std::string result(buffer);
+  std::string result = absl::StrCat("'", buffer, "'");
   delete[] buffer;
   return result;
 }
