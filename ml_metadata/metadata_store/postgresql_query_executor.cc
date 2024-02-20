@@ -374,10 +374,10 @@ absl::Status PostgreSQLQueryExecutor::DowngradeMetadataSource(
   return absl::OkStatus();
 }
 std::string PostgreSQLQueryExecutor::Bind(const char* value) {
-  return absl::StrCat("'", metadata_source_->EscapeString(value), "'");
+  return metadata_source_->EscapeString(value);
 }
 std::string PostgreSQLQueryExecutor::Bind(absl::string_view value) {
-  return absl::StrCat("'", metadata_source_->EscapeString(value), "'");
+  return metadata_source_->EscapeString(value);
 }
 std::string PostgreSQLQueryExecutor::Bind(int value) {
   return std::to_string(value);
@@ -390,10 +390,10 @@ std::string PostgreSQLQueryExecutor::Bind(double value) {
 }
 std::string PostgreSQLQueryExecutor::Bind(const google::protobuf::Any& value) {
   return absl::StrCat(
-      "decode('",
+      "decode(",
       metadata_source_->EscapeString(
           metadata_source_->EncodeBytes(value.SerializeAsString())),
-      "', 'base64')");
+      ", 'base64')");
 }
 std::string PostgreSQLQueryExecutor::Bind(bool value) {
   return value ? "TRUE" : "FALSE";
