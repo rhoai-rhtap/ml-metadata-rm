@@ -32,7 +32,7 @@ RUN bazel build -c opt --action_env=PATH \
 RUN mkdir -p /mlmd-src/third_party
 RUN cp -RL /mlmd-src/bazel-mlmd-src/external/libmysqlclient /mlmd-src/third_party/mariadb-connector-c
 
-FROM registry.redhat.io/ubi8/ubi-minimal:latest
+FROM registry.redhat.io/ubi8/ubi-minimal@sha256:7583ca0ea52001562bd81a961da3f75222209e6192e4e413ee226cff97dbd48c
 
 COPY --from=builder /mlmd-src/bazel-bin/ml_metadata/metadata_store/metadata_store_server /bin/metadata_store_server
 COPY --from=builder /mlmd-src/third_party /mlmd-src/third_party
@@ -53,20 +53,13 @@ CMD \
   "--metadata_store_server_config_file=${METADATA_STORE_SERVER_CONFIG_FILE}"
 
 
-ENTRYPOINT \
-  "/bin/metadata_store_server" \
-  "--grpc_port=${GRPC_PORT}" \
-  "--metadata_store_server_config_file=${METADATA_STORE_SERVER_CONFIG_FILE}"
-
 LABEL com.redhat.component="odh-mlmd-grpc-server-container" \
       name="managed-open-data-hub/odh-mlmd-grpc-server-container-rhel8" \
-      version="${CI_CONTAINER_VERSION}" \
-      git.url="${CI_ML_METADATA_UPSTREAM_URL}" \
-      git.commit="${CI_ML_METADATA_UPSTREAM_COMMIT}" \
+      description="Sidecar container for recording and retrieving metadata associated with ML developer and data scientist workflows" \
       summary="odh-mlmd-grpc-server" \
+      maintainer="['managed-open-data-hub@redhat.com']" \
       io.openshift.expose-services="" \
       io.k8s.display-name="odh-mlmd-grpc-server" \
       io.openshift.tags="odh-mlmd-grpc-server" \
-      maintainer="['managed-open-data-hub@redhat.com']" \
-      description="Sidecar container for recording and retrieving metadata associated with ML developer and data scientist workflows" \
+      io.k8s.description="odh-mlmd-grpc-server" \
       com.redhat.license_terms="https://www.redhat.com/licenses/Red_Hat_Standard_EULA_20191108.pdf"
